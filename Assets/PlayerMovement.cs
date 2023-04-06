@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    
+    
     [Header("移動速度設定")]
     public float moveSpeed;
+    
 
     [Header("按鍵綁定")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -14,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform PlayerCamera;   // 攝影機
 
     private float horizontalInput;   // 左右方向按鍵的數值(-1 <= X <= +1)
-    private float verticalInput;     // 上下方向按鍵的數值(-1 <= Y <= +1)
+    private float verticalInput;     // 上下方向按鍵的數值(-1 <= Z <= +1)
+    
 
     private Vector3 moveDirection;   // 移動方向
 
@@ -29,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         MyInput();
+        SpeedControl();
+        
     }
 
     private void FixedUpdate()
@@ -39,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // 方法：取得目前玩家按方向鍵上下左右的數值
     private void MyInput()
     {
+        
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
     }
@@ -47,7 +55,22 @@ public class PlayerMovement : MonoBehaviour
     {
         // 計算移動方向(其實就是計算X軸與Z軸兩個方向的力量)
         moveDirection = PlayerCamera.forward * verticalInput + PlayerCamera.right * horizontalInput;
-        // 推動第一人稱物件
+
+        // 推動第一人稱物件 normalized會讓值最大值=1或0或-1
         rbFirstPerson.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
     }
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rbFirstPerson.velocity.x, 0f, rbFirstPerson.velocity.z); // 取得僅X軸與Z軸的平面速度
+        // 如果平面速度大於預設速度值，就將物件的速度限定於預設速度值
+        if (flatVel.magnitude > moveSpeed) //magnitude=方向性的速度 
+        {
+            Vector3 limitedVel = flatVel.normalized* moveSpeed;
+            rbFirstPerson.velocity = new Vector3(limitedVel.x, rbFirstPerson.velocity.y, limitedVel.z);
+        }
+    }
+
+
+
 }
