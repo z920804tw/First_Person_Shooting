@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 566752883}
   - component: {fileID: 566752882}
   - component: {fileID: 566752881}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,6 +576,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  jumpSpeed: 5
+  groundDrag: 1
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  grounded: 1
   jumpKey: 32
   PlayerCamera: {fileID: 963194228}
 --- !u!1001 &554531093174557113
@@ -591,7 +598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 15954369925282600, guid: a2e43f5e7e3615d4fa88fb43c95278ca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12
+      value: 2.169
       objectReference: {fileID: 0}
     - target: {fileID: 15954369925282600, guid: a2e43f5e7e3615d4fa88fb43c95278ca, type: 3}
       propertyPath: m_LocalPosition.y
@@ -660,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1922703152425559550, guid: 9c2cb57730863cf47bd4d2a27e8bfb32, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1904063
+      value: -0.061
       objectReference: {fileID: 0}
     - target: {fileID: 1922703152425559550, guid: 9c2cb57730863cf47bd4d2a27e8bfb32, type: 3}
       propertyPath: m_LocalRotation.w
