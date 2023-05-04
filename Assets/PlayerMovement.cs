@@ -80,10 +80,10 @@ public class PlayerMovement : MonoBehaviour
     {
         // 計算移動方向(其實就是計算X軸與Z軸兩個方向的力量)
         moveDirection = PlayerCamera.forward * verticalInput + PlayerCamera.right * horizontalInput;
+        Vector3 mDirection = new Vector3(moveDirection.x, 0, moveDirection.z); //限制當攝影機向上、下看不會飛天，Y軸固定0
 
         // 推動第一人稱物件 normalized會讓值最大值=1或0或-1
-        rbFirstPerson.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        
+        rbFirstPerson.AddForce(mDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
     }
     private void SpeedControl() //速度限制
