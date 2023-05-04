@@ -27,7 +27,7 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY; // 將滑鼠Y軸移動數值"倒轉"過來(正變負負變正)
         yRotaiton += mouseX;
 
-        xRotation = Mathf.Clamp(xRotation, -80f,30f); // 限定X軸轉動在正30度到負90度間(抬頭和低頭有限制角度)
+        xRotation = Mathf.Clamp(xRotation, -80f,50f); // 限定X軸轉動在正30度到負90度間(抬頭和低頭有限制角度)
 
         transform.rotation = Quaternion.Euler(xRotation, yRotaiton, 0); // 設定攝影機角度
     }
