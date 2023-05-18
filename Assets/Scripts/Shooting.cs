@@ -27,9 +27,10 @@ public class Shooting : MonoBehaviour
     [Header("子彈速度")]
     public float bulletSpeed;
 
-    [Header("動畫設定")]
+    [Header("動畫設定及特效")]
     public Animator reloadAnimation;
     public Animator fireAnimation;
+    public ParticleSystem fireEffect;
 
     private void Start()
     {
@@ -47,6 +48,7 @@ public class Shooting : MonoBehaviour
             if (bulletLeft > 0 && Reloading == false)       //彈藥大於0且並沒有在裝填彈藥時可以Shoot
             {
                 Shoot();
+                fireEffect.Play();                         //播放開火的特效
             }
            
 
@@ -112,7 +114,15 @@ public class Shooting : MonoBehaviour
     {
         if(ammoDisplay != null)              
         {
-            ammoDisplay.SetText($"Ammo:{bulletLeft}/{magazineSize}");
+            if (bulletLeft == 0)
+            {
+                ammoDisplay.SetText($"Press R Reload Ammo");
+            }
+            else
+            {
+                ammoDisplay.SetText($"Ammo:{bulletLeft}/{magazineSize}");
+            }
+
         }
     }
 }

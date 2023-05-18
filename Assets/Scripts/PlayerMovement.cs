@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             if (isRuning == false)
             {
                 isRuning = true;
-                moveSpeed = moveSpeed + RunSpeed;
+                moveSpeed += RunSpeed;
             }
 
         }
