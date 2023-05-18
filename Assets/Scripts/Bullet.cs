@@ -5,14 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    Transform firPos;
-    Rigidbody rb;
+    GameObject bulletRotation;
     void Start()
     {
-        //rb = GetComponent<Rigidbody>();
-        //firPos = GameObject.Find("Player/Main Camera/Gun/Cube/firPos").transform;
-        //rb.AddForce(firPos.forward * 100, ForceMode.Impulse);
+        bulletRotation = GameObject.Find("Player/Main Camera");
+        transform.rotation = Quaternion.Euler(90f, 0,0);
         Destroy(gameObject,3f);
+        
     }
 
     // Update is called once per frame
