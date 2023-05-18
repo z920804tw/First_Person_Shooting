@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    GameObject bulletRotation;
     void Start()
     {
-        bulletRotation = GameObject.Find("Player/Main Camera");
-        transform.rotation = Quaternion.Euler(90f, 0,0);
         Destroy(gameObject,3f);
         
     }

@@ -78,9 +78,10 @@ public class Shooting : MonoBehaviour
         }
         Debug.DrawRay(ray.origin, targetPoint - ray.origin, Color.red, 10); // 顯示射線，起點以螢幕中心到 目標點-起點的地方
 
-
         GameObject currentBullet = Instantiate(bullet, firPos.position, Quaternion.identity);
         currentBullet.GetComponent<Rigidbody>().AddForce(firPos.transform.forward * bulletSpeed, ForceMode.Impulse);
+        currentBullet.GetComponent<Transform>().LookAt(targetPoint);        //子彈的角度以我targetPoint方向去旋轉
+        
 
         bulletLeft--;
         UpdateAmmoDisplay();

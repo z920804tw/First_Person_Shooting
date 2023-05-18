@@ -9,8 +9,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("移動速度設定")]
     public float moveSpeed;
+    public float RunSpeed;
     public float jumpSpeed;
     public float groundDrag;         // 地面的減速
+
+    bool isRuning;
+    float originalSpeed;             //原先速度
+
 
     [Header("地板確認")]
     public float playerHeight;       // 設定玩家高度
@@ -33,7 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-
+        originalSpeed = moveSpeed;
+        isRuning = false;
         rbFirstPerson = GetComponent<Rigidbody>();
         rbFirstPerson.freezeRotation = true;         // 鎖定第一人稱物件剛體旋轉，不讓膠囊體因為碰到物件就亂轉
     }
@@ -69,6 +75,9 @@ public class PlayerMovement : MonoBehaviour
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        Run();                 //跑步功能
+
+
         //判斷如果jumpKey被按下，就執行Jump()的函式
         if (Input.GetKeyDown(jumpKey) == true&&grounded==true)         
         {
@@ -82,8 +91,10 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = PlayerCamera.forward * verticalInput + PlayerCamera.right * horizontalInput;
         Vector3 mDirection = new Vector3(moveDirection.x, 0, moveDirection.z); //限制當攝影機向上、下看不會飛天，Y軸固定0
 
-        // 推動第一人稱物件 normalized會讓值最大值=1或0或-1
+        // 推動第一人稱物件 normalized會讓值最大值=1 ~ -1
         rbFirstPerson.AddForce(mDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
+        
 
     }
     private void SpeedControl() //速度限制
@@ -103,6 +114,24 @@ public class PlayerMovement : MonoBehaviour
         //先設定Y軸設定0 ，之後再往上推。Impulse 為瞬間的推力 ，Transform.up為以Y軸移動。
         rbFirstPerson.velocity = new Vector3(rbFirstPerson.velocity.x, 0f, rbFirstPerson.velocity.z);
         rbFirstPerson.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);
+    }
+
+    void Run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))          //按住Shift會加速，如果沒按，就還原原本的速度值
+        {
+            if (isRuning == false)
+            {
+                isRuning = true;
+                moveSpeed = moveSpeed + RunSpeed;
+            }
+
+        }
+        else
+        {
+            isRuning = false;
+            moveSpeed = originalSpeed;
+        }
     }
 
     
