@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -9,27 +10,45 @@ public class WeaponManager : MonoBehaviour
     [Header("武器")]
     public GameObject[] weaponObjects;        // 武器清單
 
-    [Header("當前武器動畫")]
-    public Animator fireAnim;                 //當前的武器動畫
+    /*[Header("當前武器動畫")]
+    public Animator fireAnim;                 //當前的武器動畫*/
+
+    [Header("設定")]
+    public TextMeshProUGUI currentWeapon;
 
     int weaponNumber = 0;                     // 目前選擇武器的順序編號
     GameObject weaponInUse;                   // 目前選擇武器
     void Start()
     {
-        
+        weaponInUse = weaponObjects[weaponNumber];
+
+        updateCurrentWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        MyInput();
+        updateCurrentWeapon();
+
+    }
+    void updateCurrentWeapon()
+    {
+        if (currentWeapon != null)
+        {
+            currentWeapon.SetText($"Weapon:{weaponObjects[weaponNumber].name}");
+        }
+    }
+    void MyInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)&&weaponNumber!=0)
         {
             SwitchWeapon(0, 0);
         }
 
 
         // 判斷：按下數字鍵2，切換為武器1
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2)&&weaponNumber!=1)
         {
             SwitchWeapon(0, 1);
         }
@@ -39,16 +58,13 @@ public class WeaponManager : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) //滑鼠向上滾
         {
             SwitchWeapon(1);
-        }     
+        }
 
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f)//滑鼠向下滾
         {
             SwitchWeapon(-1);
         }
-
     }
-
-
     void SwitchWeapon(int _addNumber, int _weaponNumber = 0)       
     {
         // 將武器清單全部隱藏，先一次全部隱藏，再顯示需要的武器
@@ -80,7 +96,8 @@ public class WeaponManager : MonoBehaviour
         }
         weaponObjects[weaponNumber].SetActive(true);     // 顯示所指定的武器
         weaponInUse = weaponObjects[weaponNumber];       // 設定目前所選擇的武器物件(屆時可以用來執行武器所特定的方法，下一章節會介紹)
-        fireAnim = weaponInUse.GetComponent<Animator>(); //取得當前選取的武器動畫控制器給fireAnim
+        //fireAnim = weaponInUse.GetComponent<Animator>(); //取得當前選取的武器動畫控制器給fireAnim
+
         
     }
 }

@@ -8,6 +8,7 @@ public class Shooting : MonoBehaviour
     [Header("參考物件")]
     public Camera PlayerCamera;
     public Transform firPos;
+    public GameObject Player;
 
     public GameObject bullet;
 
@@ -81,10 +82,10 @@ public class Shooting : MonoBehaviour
         bulletLeft--;
         UpdateAmmoDisplay();
 
-        this.GetComponent<Rigidbody>().AddForce(-firPos.transform.forward * recoilForce, ForceMode.Impulse); //開槍後有後座力，方向為開火方向的相反面
+        Player.GetComponent<Rigidbody>().AddForce(-firPos.transform.forward * recoilForce, ForceMode.Impulse); //開槍後有後座力，方向為開火方向的相反面
 
         fireEffect.Play();                         //播放開火的特效
-        fireAnimation = GetComponent<WeaponManager>().fireAnim; //這邊會從WeaponManager 那抓fireAnim的當前值給fireAnimation
+        fireAnimation = GetComponent<Animator>(); //這邊會從WeaponManager 那抓fireAnim的當前值給fireAnimation
         if (fireAnimation != null)
         {
             fireAnimation.SetTrigger("Fire");
