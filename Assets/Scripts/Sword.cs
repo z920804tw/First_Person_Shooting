@@ -19,6 +19,7 @@ public class Sword : MonoBehaviour
         {
             swordAnim =GetComponent<Animator>();
             swordAnim.SetTrigger("Fire");
+           
         }
     }
 }

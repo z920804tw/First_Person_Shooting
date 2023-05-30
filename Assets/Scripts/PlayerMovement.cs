@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
             if (isRuning == false)
             {
                 isRuning = true;
+                GameObject.Find("Player/Main Camera/Gun").GetComponent<Shooting>().fireAnimation.SetBool("Running", true);
                 moveSpeed += RunSpeed;
             }
 
@@ -130,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isRuning = false;
+            GameObject.Find("Player/Main Camera/Gun").GetComponent<Shooting>().fireAnimation.SetBool("Running", false);
             moveSpeed = originalSpeed;
         }
     }

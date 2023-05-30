@@ -112,7 +112,6 @@ public class Shooting : MonoBehaviour
 
         }
 
-
     }
     void Reload()
     {

@@ -10,8 +10,6 @@ public class WeaponManager : MonoBehaviour
     [Header("武器")]
     public GameObject[] weaponObjects;        // 武器清單
 
-    /*[Header("當前武器動畫")]
-    public Animator fireAnim;                 //當前的武器動畫*/
 
     [Header("設定")]
     public TextMeshProUGUI currentWeapon;
@@ -21,7 +19,7 @@ public class WeaponManager : MonoBehaviour
     void Start()
     {
         weaponInUse = weaponObjects[weaponNumber];
-
+        
         updateCurrentWeapon();
     }
 
@@ -96,8 +94,9 @@ public class WeaponManager : MonoBehaviour
         }
         weaponObjects[weaponNumber].SetActive(true);     // 顯示所指定的武器
         weaponInUse = weaponObjects[weaponNumber];       // 設定目前所選擇的武器物件(屆時可以用來執行武器所特定的方法，下一章節會介紹)
-        //fireAnim = weaponInUse.GetComponent<Animator>(); //取得當前選取的武器動畫控制器給fireAnim
-
+        weaponInUse.GetComponent<Animator>().Rebind();   //重新綁定所選的武器動畫，讓他初始化，這樣位置才不會亂跑
+        weaponInUse.GetComponent<Animator>().Update(0f);
+        Debug.Log($"重新綁定{weaponInUse.name}的動畫");
         
     }
 }
