@@ -94,9 +94,9 @@ public class WeaponManager : MonoBehaviour
         }
         weaponObjects[weaponNumber].SetActive(true);     // 顯示所指定的武器
         weaponInUse = weaponObjects[weaponNumber];       // 設定目前所選擇的武器物件(屆時可以用來執行武器所特定的方法，下一章節會介紹)
-        weaponInUse.GetComponent<Animator>().Rebind();   //重新綁定所選的武器動畫，讓他初始化，這樣位置才不會亂跑
-        weaponInUse.GetComponent<Animator>().Update(0f);
-        Debug.Log($"重新綁定{weaponInUse.name}的動畫");
+        //weaponInUse.GetComponent<Animator>().Rebind();   //重新綁定所選的武器動畫，讓他初始化，這樣位置才不會亂跑
+        //weaponInUse.GetComponent<Animator>().Update(0f);
+        //Debug.Log($"重新綁定{weaponInUse.name}的動畫");
         
     }
 }

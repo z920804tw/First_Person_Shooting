@@ -33,15 +33,13 @@ public class Shooting : MonoBehaviour
     public Animator fireAnimation;
     public ParticleSystem fireEffect;
 
-
-
+    bool running;
 
     private void Start()
     {
         Reloading = false;
         bulletLeft = magazineSize;
         reloadDisplay.enabled = false;
-        
         UpdateAmmoDisplay();
         
     }
@@ -50,6 +48,12 @@ public class Shooting : MonoBehaviour
     private void Update()
     {
         MyInput();
+        
+    }
+
+    private void OnEnable()
+    {
+        fireEffect.gameObject.SetActive(false);
     }
 
     void Shoot()
@@ -57,6 +61,7 @@ public class Shooting : MonoBehaviour
         Ray ray = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));  // 從攝影機射出一條射線
         RaycastHit hit;  // 宣告一個射擊點
         Vector3 targetPoint;  // 宣告一個位置點變數，到時候如果有打到東西，就存到這個變數
+        fireEffect.gameObject.SetActive(true);
 
 
         // 如果射線有打到具備碰撞體的物件
@@ -98,18 +103,26 @@ public class Shooting : MonoBehaviour
         // 判斷有沒有按下左鍵
         if (Input.GetMouseButtonDown(0) == true)
         {
-            if (bulletLeft > 0 && Reloading == false)       //彈藥大於0且並沒有在裝填彈藥時可以Shoot
+            if (bulletLeft > 0 && Reloading == false &&running==false)       //彈藥大於0且並沒有在裝填彈藥時可以Shoot
             {
                 Shoot();
 
             }
-
-
         }
+        
         if (Input.GetKeyDown(KeyCode.R) == true && bulletLeft < magazineSize && Reloading == false)  //按下R 且目前彈藥數量小於總彈藥 且沒有正在裝填時可以Reload                                                                
         {
             Reload();
+        }
 
+        running = GameObject.Find("Player").GetComponent<PlayerMovement>().isRuning; //跑步的判斷
+        if (running == true)
+        {
+            fireAnimation.SetBool("Running", true);
+        }
+        else
+        {
+            fireAnimation.SetBool("Running", false);
         }
 
     }

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed;
     public float groundDrag;         // 地面的減速
 
-    bool isRuning;
+    public bool isRuning;
     float originalSpeed;             //原先速度
 
 
@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             if (isRuning == false)
             {
                 isRuning = true;
-                GameObject.Find("Player/Main Camera/Gun").GetComponent<Shooting>().fireAnimation.SetBool("Running", true);
+                
                 moveSpeed += RunSpeed;
             }
 
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isRuning = false;
-            GameObject.Find("Player/Main Camera/Gun").GetComponent<Shooting>().fireAnimation.SetBool("Running", false);
+            
             moveSpeed = originalSpeed;
         }
     }
