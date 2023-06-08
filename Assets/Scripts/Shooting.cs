@@ -110,9 +110,13 @@ public class Shooting : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.R) == true && bulletLeft < magazineSize && Reloading == false)  //按下R 且目前彈藥數量小於總彈藥 且沒有正在裝填時可以Reload                                                                
+        if (Input.GetKeyDown(KeyCode.R) == true)  //按下R 且目前彈藥數量小於總彈藥 且沒有正在裝填時可以Reload                                                                
         {
-            Reload();
+            if(running == false && bulletLeft < magazineSize && Reloading == false)
+            {
+                Reload();
+            }
+
         }
 
         running = GameObject.Find("Player").GetComponent<PlayerMovement>().isRuning; //跑步的判斷
@@ -128,6 +132,7 @@ public class Shooting : MonoBehaviour
     }
     void Reload()
     {
+        fireAnimation.SetTrigger("Reload");    //播放Reload動畫
         Reloading = true;                      // 把Reload的狀態改成True，代表正在裝填彈藥
         reloadDisplay.enabled = true;          //Reload的字顯示出來
         Invoke("ReloadFinished", reloadTime);  // 依照reloadTime所設定的換彈夾時間倒數，時間為0時執行ReloadFinished方法
